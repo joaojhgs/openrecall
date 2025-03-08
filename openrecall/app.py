@@ -4,11 +4,11 @@ import numpy as np
 from flask import Flask, render_template_string, request, send_from_directory
 from jinja2 import BaseLoader
 
-from openrecall.config import appdata_folder, screenshots_path
-from openrecall.database import create_db, get_all_entries, get_timestamps
-from openrecall.nlp import cosine_similarity, get_embedding
-from openrecall.screenshot import record_screenshots_thread
-from openrecall.utils import human_readable_time, timestamp_to_human_readable
+from modules.openrecall.openrecall.config import appdata_folder, screenshots_path
+from modules.openrecall.openrecall.database import create_db, get_all_entries, get_timestamps
+from modules.openrecall.openrecall.nlp import cosine_similarity, get_embedding
+from modules.openrecall.openrecall.screenshot import record_screenshots_thread
+from modules.openrecall.openrecall.utils import human_readable_time, timestamp_to_human_readable
 
 app = Flask(__name__)
 
@@ -180,7 +180,7 @@ def serve_image(filename):
     return send_from_directory(screenshots_path, filename)
 
 
-if __name__ == "__main__":
+def init_main():
     create_db()
 
     print(f"Appdata folder: {appdata_folder}")
@@ -190,3 +190,6 @@ if __name__ == "__main__":
     t.start()
 
     app.run(port=8082)
+
+if __name__ == "__main__":
+    init_main()

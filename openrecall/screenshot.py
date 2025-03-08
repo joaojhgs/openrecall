@@ -5,11 +5,11 @@ import mss
 import numpy as np
 from PIL import Image
 
-from openrecall.config import screenshots_path, args
-from openrecall.database import insert_entry
-from openrecall.nlp import get_embedding
-from openrecall.ocr import extract_text_from_image
-from openrecall.utils import (
+from modules.openrecall.openrecall.config import screenshots_path, args
+from modules.openrecall.openrecall.database import insert_entry
+from modules.openrecall.openrecall.nlp import get_embedding
+from modules.openrecall.openrecall.ocr import extract_text_from_image
+from modules.openrecall.openrecall.utils import (
     get_active_app_name,
     get_active_window_title,
     is_user_active,
@@ -56,6 +56,31 @@ def take_screenshots(monitor=1):
             screenshots.append(screenshot)
 
     return screenshots
+
+
+def record_current_screenshot():
+    screenshots = take_screenshots()
+    results = []
+    for i, screenshot in enumerate(screenshots):
+                image = Image.fromarray(screenshot)
+                timestamp = int(time.time())
+                image.save(
+                    os.path.join(screenshots_path, f"{timestamp}.webp"),
+                    format="webp",
+                    lossless=True,
+                )
+                text = extract_text_from_image(screenshot)
+                embedding = get_embedding(text)
+                active_app_name = get_active_app_name()
+                active_window_title = get_active_window_title()
+                results.append({
+                    "text": text,
+                    "timestamp": timestamp,
+                    "embedding": embedding,
+                    "active_app_name": active_app_name,
+                    "active_window_title": active_window_title
+                })
+    return results
 
 
 def record_screenshots_thread():

@@ -9,11 +9,8 @@ with io.open("README.md", "r", encoding="utf-8") as f:
 
 install_requires = [
     "Flask==3.0.3",
-    "numpy==1.26.4",
     "mss==9.0.1",
     "sentence-transformers==3.0.0",
-    "torch==2.2.0",
-    "torchvision==0.17.0",
     "shapely==2.0.4",
     "h5py==3.11.0",
     "rapidfuzz==3.9.3",

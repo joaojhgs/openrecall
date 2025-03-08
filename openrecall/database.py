@@ -2,7 +2,10 @@ import sqlite3
 from collections import namedtuple
 from typing import Any, List
 
-from openrecall.config import db_path
+import numpy as np
+
+from modules.openrecall.openrecall.config import db_path
+from modules.openrecall.openrecall.nlp import cosine_similarity, get_embedding
 
 Entry = namedtuple("Entry", ["id", "app", "title", "text", "timestamp", "embedding"])
 
@@ -48,3 +51,13 @@ def insert_entry(
             conn.commit()
     except sqlite3.OperationalError as e:
         print("Error inserting entry:", e)
+
+
+def search_entries(query: str, limit: int = 10) -> List[Entry]:
+    entries = get_all_entries()
+    embeddings = [np.frombuffer(entry.embedding, dtype=np.float64) for entry in entries]
+    query_embedding = get_embedding(query)
+    similarities = [cosine_similarity(query_embedding, emb) for emb in embeddings]
+    indices = np.argsort(similarities)[::-1]
+    sorted_entries = [entries[i] for i in indices]
+    return sorted_entries[:limit]
