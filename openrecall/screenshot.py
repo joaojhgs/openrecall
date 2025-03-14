@@ -70,13 +70,11 @@ def record_current_screenshot():
                     lossless=True,
                 )
                 text = extract_text_from_image(screenshot)
-                embedding = get_embedding(text)
                 active_app_name = get_active_app_name()
                 active_window_title = get_active_window_title()
                 results.append({
                     "text": text,
                     "timestamp": timestamp,
-                    "embedding": embedding,
                     "active_app_name": active_app_name,
                     "active_window_title": active_window_title
                 })
