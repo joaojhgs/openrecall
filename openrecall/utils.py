@@ -1,5 +1,7 @@
 import sys
 
+from app.helpers.aurora_logger import log_info, log_debug, log_error, log_warning
+
 
 def human_readable_time(timestamp):
     import datetime
@@ -137,7 +139,7 @@ def is_user_active_osx():
         # If there's an error running the command, assume the user is not idle
         return True
     except Exception as e:
-        print(f"An error occurred: {e}")
+        log_error(f"An error occurred: {e}")
         # If there's any other error, assume the user is not idle
         return True
 

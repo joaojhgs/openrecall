@@ -6,6 +6,7 @@ import numpy as np
 
 from modules.openrecall.openrecall.config import db_path
 from modules.openrecall.openrecall.nlp import cosine_similarity, get_embedding
+from app.helpers.aurora_logger import log_info, log_debug, log_error, log_warning
 
 Entry = namedtuple("Entry", ["id", "app", "title", "text", "timestamp", "embedding"])
 
@@ -50,7 +51,7 @@ def insert_entry(
             )
             conn.commit()
     except sqlite3.OperationalError as e:
-        print("Error inserting entry:", e)
+        log_error(f"Error inserting entry: {e}")
 
 
 def search_entries(query: str, limit: int = 10) -> List[Entry]:

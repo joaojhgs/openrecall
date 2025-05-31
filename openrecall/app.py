@@ -9,6 +9,7 @@ from modules.openrecall.openrecall.database import create_db, get_all_entries, g
 from modules.openrecall.openrecall.nlp import cosine_similarity, get_embedding
 from modules.openrecall.openrecall.screenshot import record_screenshots_thread
 from modules.openrecall.openrecall.utils import human_readable_time, timestamp_to_human_readable
+from app.helpers.aurora_logger import log_info, log_debug, log_error, log_warning
 
 app = Flask(__name__)
 
@@ -183,7 +184,7 @@ def serve_image(filename):
 def init_main():
     create_db()
 
-    print(f"Appdata folder: {appdata_folder}")
+    log_info(f"Appdata folder: {appdata_folder}")
 
     # Start the thread to record screenshots
     t = Thread(target=record_screenshots_thread)
