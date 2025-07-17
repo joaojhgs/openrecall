@@ -62,22 +62,22 @@ def record_current_screenshot():
     screenshots = take_screenshots()
     results = []
     for i, screenshot in enumerate(screenshots):
-                image = Image.fromarray(screenshot)
-                timestamp = int(time.time())
-                image.save(
-                    os.path.join(screenshots_path, f"{timestamp}.webp"),
-                    format="webp",
-                    lossless=True,
-                )
-                text = extract_text_from_image(screenshot)
-                active_app_name = get_active_app_name()
-                active_window_title = get_active_window_title()
-                results.append({
-                    "text": text,
-                    "timestamp": timestamp,
-                    "active_app_name": active_app_name,
-                    "active_window_title": active_window_title
-                })
+        image = Image.fromarray(screenshot)
+        timestamp = int(time.time())
+        image.save(
+            os.path.join(screenshots_path, f"{timestamp}.webp"),
+            format="webp",
+            lossless=True,
+        )
+        text = extract_text_from_image(screenshot)
+        active_app_name = get_active_app_name()
+        active_window_title = get_active_window_title()
+        results.append({
+            "text": text,
+            "timestamp": timestamp,
+            "active_app_name": active_app_name,
+            "active_window_title": active_window_title
+        })
     return results
 
 

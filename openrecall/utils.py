@@ -25,7 +25,7 @@ def timestamp_to_human_readable(timestamp):
     try:
         dt_object = datetime.datetime.fromtimestamp(timestamp)
         return dt_object.strftime("%Y-%m-%d %H:%M:%S")
-    except:
+    except BaseException:
         return ""
 
 
@@ -35,7 +35,7 @@ def get_active_app_name_osx():
     try:
         active_app = NSWorkspace.sharedWorkspace().activeApplication()
         return active_app["NSApplicationName"]
-    except:
+    except BaseException:
         return ""
 
 
@@ -54,7 +54,7 @@ def get_active_window_title_osx():
         for window in windows:
             if window["kCGWindowOwnerName"] == app_name:
                 return window.get("kCGWindowName", "Unknown")
-    except:
+    except BaseException:
         return ""
     return ""
 
@@ -69,7 +69,7 @@ def get_active_app_name_windows():
         _, pid = win32process.GetWindowThreadProcessId(hwnd)
         exe = psutil.Process(pid).name()
         return exe
-    except:
+    except BaseException:
         return ""
 
 
@@ -79,7 +79,7 @@ def get_active_window_title_windows():
     try:
         hwnd = win32gui.GetForegroundWindow()
         return win32gui.GetWindowText(hwnd)
-    except:
+    except BaseException:
         return ""
 
 

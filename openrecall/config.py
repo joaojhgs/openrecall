@@ -49,5 +49,5 @@ else:
 if not os.path.exists(screenshots_path):
     try:
         os.makedirs(screenshots_path)
-    except:
+    except BaseException:
         pass
